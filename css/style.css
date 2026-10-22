@@ -160,11 +160,12 @@ strong { font-weight: 700; }
   border-bottom: 1px solid rgba(122,31,31,.15);
 }
 .brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
-.brand__tib {
-  font: 500 1.05rem/1 var(--f-tib); color: var(--lime);
-  background: var(--maroon); padding: .7rem .6rem .55rem; border-radius: 2px;
+.brand__mark {
+  display: grid; place-items: center;
+  background: var(--maroon-dk); padding: .45rem .55rem; border-radius: 2px;
   box-shadow: inset 0 0 0 2px var(--ochre);
 }
+.brand__mark img { display: block; height: 40px; width: auto; }
 .brand__name { font: 700 1.5rem/1 var(--f-head); color: var(--ink); display: flex; flex-direction: column; }
 .brand__name small { font: 400 .68rem/1.6 var(--f-label); letter-spacing: .2em; text-transform: uppercase; color: var(--maroon); }
 .nav__links { display: flex; align-items: center; gap: 1.8rem; }
@@ -192,14 +193,8 @@ strong { font-weight: 700; }
 .hero__facts li { display: flex; flex-direction: column; }
 .hero__facts strong { font: 700 2rem/1 var(--f-head); color: var(--maroon); }
 .hero__facts span { font-size: .82rem; color: var(--ink-soft); }
-.hero__art { position: relative; padding-bottom: 3rem; }
-.lwin--lg img { aspect-ratio: 4 / 4.6; }
-.lwin--sm {
-  position: absolute; width: 44%; left: -12%; bottom: 0;
-  padding: 8px 12px 12px;
-  filter: drop-shadow(0 18px 30px rgba(43,29,21,.3));
-}
-.lwin--sm img { aspect-ratio: 1; }
+.hero__art { position: relative; }
+.lwin--lg img { aspect-ratio: 4 / 3; object-position: 80% 50%; }
 
 /* ---------- Intro ---------- */
 .intro { text-align: center; padding: 6rem 0 5rem; max-width: 900px; }
@@ -256,6 +251,29 @@ strong { font-weight: 700; }
   background: var(--ochre); color: var(--ink); padding: .55rem .7rem; border-radius: 2px;
 }
 
+/* ---------- Old home tour gallery ---------- */
+.tour { padding: 6rem 0; background: var(--clay); }
+.tour__grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 210px; grid-auto-flow: dense; gap: .9rem;
+}
+.tour__item {
+  position: relative; margin: 0; overflow: hidden; cursor: zoom-in;
+  background: var(--timber);
+  border: 3px solid var(--timber); outline: 1px solid var(--ochre); outline-offset: -6px;
+}
+.tour__item--big { grid-column: span 2; grid-row: span 2; }
+.tour__item--wide { grid-column: span 2; }
+.tour__item--tall { grid-row: span 2; }
+.tour__item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease, filter .6s ease; }
+.tour__item:hover img { transform: scale(1.05); filter: brightness(1.08); }
+.tour__item figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; pointer-events: none;
+  padding: 2.2rem 1rem .8rem;
+  background: linear-gradient(transparent, rgba(20,14,10,.85));
+  font: italic 500 1.05rem/1.3 var(--f-head); color: var(--lime);
+}
+
 /* ---------- Stay ---------- */
 .stay { padding: 6rem 0 6rem; }
 .rooms { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
@@ -306,6 +324,7 @@ strong { font-weight: 700; }
 .lightbox .slider__btn--prev { left: 16px; }
 .lightbox .slider__btn--next { right: 16px; }
 .lightbox__close { top: 36px; right: 16px; }
+.lightbox.is-single .slider__btn--prev, .lightbox.is-single .slider__btn--next { display: none; }
 .lightbox__count { position: fixed; bottom: 20px; left: 0; right: 0; text-align: center; color: var(--lime); font: 400 .8rem/1 var(--f-label); letter-spacing: .14em; }
 .badge {
   display: inline-block; font: 400 .74rem/1 var(--f-label); letter-spacing: .14em; text-transform: uppercase;
@@ -401,6 +420,15 @@ strong { font-weight: 700; }
 .dishes span { display: block; font: 600 1.3rem/1.2 var(--f-head); color: var(--maroon); }
 .note { font-size: .92rem; background: #fbf3e2; border-left: 4px solid var(--ochre); padding: .9rem 1.1rem; }
 .kitchen__cta { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+.plates { display: flex; gap: 1.4rem; margin: 1.8rem 0 .4rem; }
+.plates figure { margin: 0; text-align: center; flex: 0 1 110px; }
+.plates img {
+  width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; cursor: zoom-in;
+  border: 3px solid var(--ochre); box-shadow: 0 0 0 3px var(--lime), 0 0 0 5px var(--maroon);
+  transition: transform .3s;
+}
+.plates img:hover { transform: scale(1.06); }
+.plates figcaption { margin-top: .7rem; font: 400 .74rem/1.3 var(--f-label); letter-spacing: .12em; text-transform: uppercase; color: var(--maroon); }
 .kitchen__photos { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.4rem; align-items: end; }
 .kitchen__photos img { aspect-ratio: 3 / 4.6; }
 .kitchen__photos .lwin:nth-child(2) img { aspect-ratio: 3 / 4; }
@@ -464,8 +492,8 @@ strong { font-weight: 700; }
 .foot { background: var(--maroon-dk); color: #e8d9c2; text-align: center; padding-bottom: 2rem; }
 .foot .flags { background-color: var(--lime); }
 .foot__inner { padding-top: 4.5rem; }
-.foot__tib { font: 500 2.4rem/1.3 var(--f-tib); color: var(--ochre); margin: 0; }
-.foot h2 { color: var(--lime); }
+.foot h2 { color: var(--lime); margin: 0 0 1rem; }
+.foot__logo { display: block; width: min(320px, 80%); height: auto; margin: 0 auto; }
 .foot__tag { font: italic 500 1.3rem var(--f-head); color: #e8d9c2; }
 .foot__cta { display: flex; justify-content: center; flex-wrap: wrap; gap: .8rem; margin: 2rem 0 3rem; }
 .foot__cta .btn:not(.btn--wa) { background: var(--ochre); border-color: var(--ochre); color: var(--ink); }
@@ -519,7 +547,6 @@ strong { font-weight: 700; }
   .hero, .heritage__grid, .kitchen, .reach, .rooms { grid-template-columns: 1fr; }
   .hero { gap: 3rem; padding-top: 3rem; }
   .hero__art { max-width: 480px; margin-inline: auto; width: 100%; }
-  .lwin--sm { left: -4%; }
   .heritage__grid, .kitchen, .reach { gap: 3rem; }
   .enquiry__grid { grid-template-columns: 1fr 1fr; }
   .plan { grid-template-columns: 1fr; }
@@ -528,7 +555,12 @@ strong { font-weight: 700; }
 @media (max-width: 600px) {
   body { font-size: 1rem; }
   .brand__name { font-size: 1.25rem; }
-  .brand__tib { font-size: .9rem; padding: .6rem .5rem .45rem; }
+  .brand__mark { padding: .35rem .45rem; }
+  .brand__mark img { height: 34px; }
+  .tour__grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; gap: .6rem; }
+  .tour__item--wide { grid-column: span 2; }
+  .tour__item figcaption { font-size: .78rem; padding: 1.6rem .7rem .55rem; }
+  .plates { gap: .8rem; }
   .hero__facts { gap: 1.4rem; }
   .hero__facts strong { font-size: 1.6rem; }
   .pillars, .opt-grid, .day, .enquiry__grid, .dishes { grid-template-columns: 1fr; }
@@ -543,7 +575,6 @@ strong { font-weight: 700; }
   .reach__map { height: 320px; }
   .heritage__photos .lwin:nth-child(2) { margin-top: 3rem; }
   .lwin { padding: 8px 12px 12px; }
-  .lwin--sm { left: 0; width: 40%; }
   .intro, .stay, .stok, .kitchen, .reach { padding-block: 4.5rem; }
   .heritage, .options { padding-block: 4.5rem; }
 }

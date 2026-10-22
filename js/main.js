@@ -72,11 +72,19 @@
   var boxCount = box.querySelector(".lightbox__count");
   var boxPhotos = [], boxIndex = 0;
 
+  // photos: list of {src, alt} (an <img> works too)
   function showInBox(i) {
     boxIndex = (i + boxPhotos.length) % boxPhotos.length;
     boxImg.src = boxPhotos[boxIndex].src;
     boxImg.alt = boxPhotos[boxIndex].alt;
-    boxCount.textContent = boxPhotos.length > 1 ? (boxIndex + 1) + " / " + boxPhotos.length : "";
+    var count = boxPhotos.length > 1 ? (boxIndex + 1) + " / " + boxPhotos.length : "";
+    boxCount.textContent = [boxImg.alt, count].filter(Boolean).join("  ·  ");
+    box.classList.toggle("is-single", boxPhotos.length < 2);
+  }
+  function openBox(photos, i) {
+    boxPhotos = photos;
+    showInBox(i);
+    box.showModal();
   }
   box.querySelector(".slider__btn--prev").addEventListener("click", function () { showInBox(boxIndex - 1); });
   box.querySelector(".slider__btn--next").addEventListener("click", function () { showInBox(boxIndex + 1); });
@@ -92,11 +100,7 @@
     var photos = Array.prototype.slice.call(track.querySelectorAll("img"));
 
     photos.forEach(function (img, i) {
-      img.addEventListener("click", function () {
-        boxPhotos = photos;
-        showInBox(i);
-        box.showModal();
-      });
+      img.addEventListener("click", function () { openBox(photos, i); });
     });
     if (photos.length < 2) return;
 
@@ -145,8 +149,24 @@
     mark(0);
   });
 
+  // Photo galleries (home tour, dishes): tap a photo to browse them full screen
+  document.querySelectorAll("[data-gallery]").forEach(function (gallery) {
+    var photos = Array.prototype.slice.call(gallery.querySelectorAll("img"));
+    photos.forEach(function (img, i) {
+      img.addEventListener("click", function () { openBox(photos, i); });
+    });
+  });
+
+  // Single image links (e.g. the brochure) open in the viewer instead of a new tab
+  document.querySelectorAll("[data-zoom]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      openBox([{ src: a.href, alt: a.dataset.zoom }], 0);
+    });
+  });
+
   // Reveal on scroll
-  var els = document.querySelectorAll(".sec-head, .pillar, .room, .opt, .day li, .lwin, .gal img, .dishes, .gift");
+  var els = document.querySelectorAll(".sec-head, .pillar, .room, .opt, .day li, .lwin, .gal img, .dishes, .gift, .tour__item, .plates figure");
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
