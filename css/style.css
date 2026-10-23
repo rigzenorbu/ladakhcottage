@@ -187,8 +187,25 @@ strong { font-weight: 700; }
 .hero__facts li { display: flex; flex-direction: column; }
 .hero__facts strong { font: 700 2rem/1 var(--f-head); color: var(--maroon); }
 .hero__facts span { font-size: .82rem; color: var(--ink-soft); }
-.hero__art { position: relative; }
-.lwin--lg img { aspect-ratio: 4 / 3; object-position: 80% 50%; }
+/* Hero collage: main cottage photo with two tilted postcard frames over its lower corners */
+.hero__art { position: relative; padding-bottom: 26%; }
+.lwin--lg img { aspect-ratio: 4 / 3; }
+.hero__card {
+  position: absolute; width: 46%; bottom: 0;
+  padding: 8px 12px 12px;
+  filter: drop-shadow(0 18px 28px rgba(43,29,21,.35));
+  transition: rotate .4s ease, scale .4s ease;
+}
+.hero__card img { aspect-ratio: 4 / 3; }
+.hero__card--old { left: -9%; rotate: -3deg; }
+.hero__card--garden { right: -5%; bottom: 4%; rotate: 2.5deg; }
+.hero__card:hover { rotate: 0deg; scale: 1.04; z-index: 2; }
+.hero__tag {
+  position: absolute; left: 50%; bottom: -10px; translate: -50% 0; white-space: nowrap;
+  font: 400 .68rem/1 var(--f-label); letter-spacing: .14em; text-transform: uppercase;
+  background: var(--ochre); color: var(--ink); padding: .45rem .7rem;
+}
+.lwin--lg .hero__tag { left: auto; right: 34px; bottom: auto; top: 26px; translate: none; }
 
 /* ---------- Intro ---------- */
 .intro { text-align: center; padding: 6rem 0 5rem; max-width: 900px; }
@@ -412,6 +429,12 @@ strong { font-weight: 700; }
 .dishes { list-style: none; padding: 0; margin: 1.8rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
 .dishes li { padding: .8rem 0; border-bottom: 1px dotted rgba(122,31,31,.35); font-size: .9rem; color: var(--ink-soft); }
 .dishes span { display: block; font: 600 1.3rem/1.2 var(--f-head); color: var(--maroon); }
+.extra {
+  margin: -.4rem 0 1.4rem; padding: .9rem 1.1rem; font-size: .9rem; color: var(--ink-soft);
+  border: 1.5px dashed var(--maroon); border-radius: var(--radius);
+}
+.extra + .extra { margin-top: 0; }
+.extra span { display: block; font: 600 1.3rem/1.2 var(--f-head); color: var(--maroon); }
 .note { font-size: .92rem; background: #fbf3e2; border-left: 4px solid var(--ochre); padding: .9rem 1.1rem; }
 .kitchen__cta { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
 .plates { display: flex; gap: 1.4rem; margin: 1.8rem 0 .4rem; }
@@ -545,7 +568,9 @@ strong { font-weight: 700; }
 
   .hero, .heritage__grid, .kitchen, .reach, .rooms { grid-template-columns: 1fr; }
   .hero { gap: 3rem; padding-top: 3rem; }
-  .hero__art { max-width: 480px; margin-inline: auto; width: 100%; }
+  .hero__art { max-width: 520px; margin-inline: auto; width: 100%; }
+  .hero__card--old { left: -2%; }
+  .hero__card--garden { right: -2%; }
   .heritage__grid, .kitchen, .reach { gap: 3rem; }
   .enquiry__grid { grid-template-columns: 1fr 1fr; }
   .plan { grid-template-columns: 1fr; }
